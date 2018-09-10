@@ -8,14 +8,14 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-    - ./src:/var/www/html
+    - ${PROJECT_DIRECTORY}:/var/www/html
     - ./nginx/log:/var/log/nginx/
 
   php-fpm:
     build: ./php-fpm
     container_name: "laravel-php-fpm"
     volumes:
-    - ./src:/var/www/html
+    - ${PROJECT_DIRECTORY}:/var/www/html
 
   redis:
     image: redis:alpine
