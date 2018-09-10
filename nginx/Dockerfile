@@ -1,4 +1,2 @@
 FROM nginx:alpine
-#COPY ./default.conf /etc/nginx/
-EXPOSE 80
-CMD ["nginx"]
+COPY ./default.conf /etc/nginx/conf.d/

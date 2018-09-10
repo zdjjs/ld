@@ -6,13 +6,16 @@ services:
     container_name: "laravel-nginx"
     ports:
       - "10080:80"
-#    volumes:
-#      - ./src:/var/www/html
+      - "10443:443"
+    volumes:
+    - ./src:/var/www/html
+    - ./nginx/log:/var/log/nginx/
 
   php-fpm:
     build: ./php-fpm
     container_name: "laravel-php-fpm"
-
+    volumes:
+    - ./src:/var/www/html
 
   redis:
     image: redis:alpine
@@ -51,4 +54,3 @@ services:
     environment:
       MINIO_ACCESS_KEY: "AKIAIOSFODNN7EXAMPLE"
       MINIO_SECRET_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-
