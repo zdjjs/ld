@@ -23,7 +23,7 @@ services:
     volumes:
       - ./redis/data:/data
     ports:
-      - "16379:6379"
+      - "56379:6379"
 
   postgres:
     build: ./postgres
@@ -35,14 +35,14 @@ services:
       POSTGRES_USER: "laravel"
       POSTGRES_PASSWORD: "laravel"
     ports:
-      - "15432:5432"
+      - "55432:5432"
 
   mailhog:
     build: ./mailhog
     container_name: "laravel-mailhog"
     ports:
-    - "11025:1025"
-    - "18025:8025"
+    - "51025:1025"
+    - "58025:8025"
 
   minio:
     build: ./minio
@@ -50,7 +50,7 @@ services:
     volumes:
       - ./minio/data:/data
     ports:
-      - "19000:9000"
+      - "59000:9000"
     environment:
       MINIO_ACCESS_KEY: "AKIAIOSFODNN7EXAMPLE"
       MINIO_SECRET_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
