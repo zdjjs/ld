@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./nginx
+    container_name: "laravel-nginx"
+    ports:
+      - "10080:80"
+#    volumes:
+#      - ./src:/var/www/html
+
+  php-fpm:
+    build: ./php-fpm
+    container_name: "laravel-php-fpm"
+
+
+  redis:
+    image: redis:alpine
+    container_name: "laravel-redis"
+    volumes:
+      - ./redis/data:/data
+    ports:
+      - "16379:6379"
+
+  postgres:
+    build: ./postgres
+    container_name: "laravel-postgres"
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "laravel"
+      POSTGRES_USER: "laravel"
+      POSTGRES_PASSWORD: "laravel"
+    ports:
+      - "15432:5432"
+
+  mailhog:
+    build: ./mailhog
+    container_name: "laravel-mailhog"
+    ports:
+    - "11025:1025"
+    - "18025:8025"
+
+  minio:
+    build: ./minio
+    container_name: "laravel-minio"
+    volumes:
+      - ./minio/data:/data
+    ports:
+      - "19000:9000"
+    environment:
+      MINIO_ACCESS_KEY: "AKIAIOSFODNN7EXAMPLE"
+      MINIO_SECRET_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
