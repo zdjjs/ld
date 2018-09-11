@@ -8,17 +8,17 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-    - ${PROJECT_DIRECTORY}:/var/www/html
-    - ./nginx/log:/var/log/nginx/
+      - ${PROJECT_DIRECTORY}:/var/www/html
+      - ./nginx/log:/var/log/nginx/
 
-  php-fpm:
-    build: ./php-fpm
-    container_name: "laravel-php-fpm"
+  php:
+    build: ./php
+    container_name: "laravel-php"
     volumes:
-    - ${PROJECT_DIRECTORY}:/var/www/html
+      - ${PROJECT_DIRECTORY}:/var/www/html
 
   redis:
-    image: redis:alpine
+    build: ./redis
     container_name: "laravel-redis"
     volumes:
       - ./redis/data:/data
@@ -41,8 +41,8 @@ services:
     build: ./mailhog
     container_name: "laravel-mailhog"
     ports:
-    - "51025:1025"
-    - "58025:8025"
+      - "51025:1025"
+      - "58025:8025"
 
   minio:
     build: ./minio
