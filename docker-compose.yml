@@ -1,6 +1,13 @@
 version: '3'
 
 services:
+  work:
+    build: ./work
+    container_name: "work"
+    volumes:
+      - ${PROJECT_DIRECTORY}:/var/www/html
+    tty: true
+
   nginx:
     build: ./nginx
     container_name: "laravel-nginx"
@@ -31,7 +38,6 @@ services:
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: "laravel"
       POSTGRES_USER: "laravel"
       POSTGRES_PASSWORD: "laravel"
     ports:
