@@ -1,4 +1,4 @@
-FROM php:7-fpm-alpine
+FROM php:7.2-fpm-alpine
 WORKDIR /var/www/html
 
 RUN apk update
