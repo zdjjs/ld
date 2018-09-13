@@ -3,14 +3,12 @@ version: '3'
 services:
   work:
     build: ./work
-    container_name: "work"
     volumes:
       - ${DOCKER_PROJECT_ROOT}:/var/www/html
     tty: true
 
   nginx:
     build: ./nginx
-    container_name: "nginx"
     ports:
       - "${DOCKER_HTTP_PORT}:80"
       - "${DOCKER_HTTPS_PORT}:443"
@@ -20,19 +18,16 @@ services:
 
   php-fpm:
     build: ./php-fpm
-    container_name: "php-fpm"
     volumes:
       - ${DOCKER_PROJECT_ROOT}:/var/www/html
 
   redis:
     build: ./redis
-    container_name: "redis"
     volumes:
       - ./redis/data:/data
 
   postgres:
     build: ./postgres
-    container_name: "postgres"
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     environment:
@@ -43,13 +38,11 @@ services:
 
   mailhog:
     build: ./mailhog
-    container_name: "mailhog"
     ports:
       - "${DOCKER_MAILHOG_PORT}:8025"
 
   minio:
     build: ./minio
-    container_name: "minio"
     volumes:
       - ./minio/data:/data
     ports:
