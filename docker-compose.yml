@@ -5,58 +5,55 @@ services:
     build: ./work
     container_name: "work"
     volumes:
-      - ${PROJECT_DIRECTORY}:/var/www/html
+      - ${DOCKER_PROJECT_ROOT}:/var/www/html
     tty: true
 
   nginx:
     build: ./nginx
-    container_name: "laravel-nginx"
+    container_name: "nginx"
     ports:
-      - "80:80"
-      - "443:443"
+      - "${DOCKER_HTTP_PORT}:80"
+      - "${DOCKER_HTTPS_PORT}:443"
     volumes:
-      - ${PROJECT_DIRECTORY}:/var/www/html
+      - ${DOCKER_PROJECT_ROOT}:/var/www/html
       - ./nginx/log:/var/log/nginx/
 
-  php:
-    build: ./php
-    container_name: "laravel-php"
+  php-fpm:
+    build: ./php-fpm
+    container_name: "php-fpm"
     volumes:
-      - ${PROJECT_DIRECTORY}:/var/www/html
+      - ${DOCKER_PROJECT_ROOT}:/var/www/html
 
   redis:
     build: ./redis
-    container_name: "laravel-redis"
+    container_name: "redis"
     volumes:
       - ./redis/data:/data
-    ports:
-      - "56379:6379"
 
   postgres:
     build: ./postgres
-    container_name: "laravel-postgres"
+    container_name: "postgres"
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: "laravel"
       POSTGRES_PASSWORD: "laravel"
     ports:
-      - "55432:5432"
+      - "${DOCKER_POSTGRES_PORT}:5432"
 
   mailhog:
     build: ./mailhog
-    container_name: "laravel-mailhog"
+    container_name: "mailhog"
     ports:
-      - "51025:1025"
-      - "58025:8025"
+      - "${DOCKER_MAILHOG_PORT}:8025"
 
   minio:
     build: ./minio
-    container_name: "laravel-minio"
+    container_name: "minio"
     volumes:
       - ./minio/data:/data
     ports:
-      - "59000:9000"
+      - "${DOCKER_MINIO_PORT}:9000"
     environment:
       MINIO_ACCESS_KEY: "AKIAIOSFODNN7EXAMPLE"
       MINIO_SECRET_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"

@@ -1,12 +1,24 @@
+FROM centos:centos7 AS git-build
+RUN yum install -y gcc curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker make wget \
+&& wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.19.0.tar.gz \
+&& tar zxvf git-2.19.0.tar.gz \
+&& cd ./git-2.19.0 \
+&& ./configure --prefix=/tmp/git \
+&& make all \
+&& make install
+
 FROM centos:centos7
+RUN yum update -y \
+&& curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
+&& yum install -y epel-release  http://rpms.famillecollet.com/enterprise/remi-release-7.rpm https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm \
+&& yum install -y libzip-devel zip unzip wget nodejs postgresql96 \
+&& yum install -y --enablerepo=remi,remi-php72 php php-devel php-mbstring php-pdo php-pgsql php-gd php-xml php-mcrypt php-zip \
+&& curl -sS https://getcomposer.org/installer | php -- --install-dir=/tmp \
+&& mv /tmp/composer.phar /usr/local/bin/composer
+COPY --from=git-build /tmp/git /usr/local
+
+RUN composer config -g repos.packagist composer https://packagist.jp \
+&& composer global require hirak/prestissimo \
+&& composer global require laravel/installer
+
 WORKDIR /var/www/html
-
-RUN yum update -y
-
-RUN yum install -y epel-release
-RUN rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-RUN yum install -y --enablerepo=remi,remi-php72 php php-devel php-mbstring php-pdo php-pgsql php-gd php-xml php-mcrypt
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/tmp
-RUN mv /tmp/composer.phar /usr/local/bin/composer
-RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-RUN yum install -y nodejs
