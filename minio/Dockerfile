@@ -1,2 +1,7 @@
 FROM minio/minio
-ENTRYPOINT ["minio", "server", "/data"]
+ENV MINIO_ACCESS_KEY AKIAIOSFODNN7EXAMPLE
+ENV MINIO_SECRET_KEY wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+WORKDIR /minio/storage
+
+ENTRYPOINT ["minio", "server", "/minio"]

@@ -30,9 +30,6 @@ services:
     build: ./postgres
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: "laravel"
-      POSTGRES_PASSWORD: "laravel"
     ports:
       - "${DOCKER_POSTGRES_PORT}:5432"
 
@@ -44,9 +41,6 @@ services:
   minio:
     build: ./minio
     volumes:
-      - ./minio/data:/data
+      - ./minio/data:/minio
     ports:
       - "${DOCKER_MINIO_PORT}:9000"
-    environment:
-      MINIO_ACCESS_KEY: "AKIAIOSFODNN7EXAMPLE"
-      MINIO_SECRET_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
