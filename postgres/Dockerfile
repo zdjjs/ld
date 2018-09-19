@@ -1,3 +1,4 @@
 FROM postgres:9-alpine
-ENV POSTGRES_USER laravel
-ENV POSTGRES_PASSWORD laravel
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD password
+ENV LANG ja_JP.utf8
