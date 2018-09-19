@@ -33,6 +33,14 @@ services:
     ports:
       - "${DOCKER_POSTGRES_PORT}:5432"
 
+  pgweb:
+    build: ./pgweb
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    restart: always
+
   mailhog:
     build: ./mailhog
     ports:
