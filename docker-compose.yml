@@ -4,13 +4,13 @@ services:
   work:
     build: ./work
     volumes:
-      - ${DOCKER_PROJECT_ROOT}:/var/www/html
+      - ${PROJECT_ROOT}:/var/www/html
     tty: true
 
   php-fpm:
     build: ./php-fpm
     volumes:
-      - ${DOCKER_PROJECT_ROOT}:/var/www/html
+      - ${PROJECT_ROOT}:/var/www/html
     links:
       - "proxy:minio.${DOMAIN}"
 
@@ -45,7 +45,7 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - ${DOCKER_PROJECT_ROOT}:/var/www/html
+      - ${PROJECT_ROOT}:/var/www/html
       - ./nginx/log:/var/log/nginx/
     depends_on:
       - php-fpm
