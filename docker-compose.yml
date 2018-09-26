@@ -16,33 +16,29 @@ services:
     build: ./redis
     volumes:
       - ./redis/data:/data
+    ports:
+      - "${POSTGRES_PORT}:6379"
 
   postgres:
     build: ./postgres
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     ports:
-      - "${DOCKER_POSTGRES_PORT}:5432"
+      - "${POSTGRES_PORT}:5432"
 
   pgweb:
     build: ./pgweb
-    ports:
-      - "8081:8081"
     depends_on:
       - postgres
     restart: on-failure
 
   mailhog:
     build: ./mailhog
-    ports:
-      - "${DOCKER_MAILHOG_PORT}:8025"
 
   minio:
     build: ./minio
     volumes:
       - ./minio/data:/minio
-    ports:
-      - "${DOCKER_MINIO_PORT}:9000"
 
   nginx:
     build: ./nginx
@@ -51,19 +47,16 @@ services:
       - ./nginx/log:/var/log/nginx/
     depends_on:
       - php-fpm
-    expose:
-      - "80"
 
   proxy:
     build: ./proxy
     env_file:
       - .env
-      - ./proxy/.env
     volumes:
       - ./proxy/certificates:/ssl
       - ./proxy/log:/var/log/nginx/
     depends_on:
       - nginx
     ports:
-      - "80:80"
-      - "443:443"
+      - "${HTTP_PORT}:80"
+      - "${HTTPS_PORT}:443"
