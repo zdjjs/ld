@@ -46,12 +46,24 @@ services:
 
   nginx:
     build: ./nginx
-    ports:
-      - "${DOCKER_HTTP_PORT}:80"
-      - "${DOCKER_HTTPS_PORT}:443"
     volumes:
       - ${DOCKER_PROJECT_ROOT}:/var/www/html
       - ./nginx/log:/var/log/nginx/
-      - ./ssl/certificates:/etc/nginx/ssl
     depends_on:
       - php-fpm
+    expose:
+      - "80"
+
+  proxy:
+    build: ./proxy
+    env_file:
+      - .env
+      - ./proxy/.env
+    volumes:
+      - ./proxy/certificates:/ssl
+      - ./proxy/log:/var/log/nginx/
+    depends_on:
+      - nginx
+    ports:
+      - "80:80"
+      - "443:443"
