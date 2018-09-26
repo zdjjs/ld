@@ -11,6 +11,8 @@ services:
     build: ./php-fpm
     volumes:
       - ${DOCKER_PROJECT_ROOT}:/var/www/html
+    links:
+      - "proxy:minio.${DOMAIN}"
 
   redis:
     build: ./redis
@@ -55,8 +57,6 @@ services:
     volumes:
       - ./proxy/certificates:/ssl
       - ./proxy/log:/var/log/nginx/
-    depends_on:
-      - nginx
     restart: on-failure
     ports:
       - "${HTTP_PORT}:80"
