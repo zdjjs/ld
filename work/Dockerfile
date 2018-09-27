@@ -1,11 +1,4 @@
-FROM centos:centos7 AS git-build
-RUN yum install -y gcc curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker make wget \
-&& wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.19.0.tar.gz \
-&& tar zxvf git-2.19.0.tar.gz \
-&& cd ./git-2.19.0 \
-&& ./configure --prefix=/tmp/git \
-&& make all \
-&& make install
+FROM zdjjs/centos7-git AS git
 
 FROM centos:centos7
 RUN yum update -y \
@@ -15,7 +8,7 @@ RUN yum update -y \
 && yum install -y --enablerepo=remi,remi-php72 php php-devel php-mbstring php-pdo php-pgsql php-gd php-xml php-mcrypt php-zip \
 && curl -sS https://getcomposer.org/installer | php -- --install-dir=/tmp \
 && mv /tmp/composer.phar /usr/local/bin/composer
-COPY --from=git-build /tmp/git /usr/local
+COPY --from=git /git /usr/local
 
 RUN composer config -g repos.packagist composer https://packagist.jp \
 && composer global require hirak/prestissimo \
