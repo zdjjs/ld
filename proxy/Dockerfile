@@ -8,12 +8,14 @@ RUN wget https://github.com/progrium/entrykit/releases/download/v0.4.0/entrykit_
 && entrykit --symlink
 
 COPY ./generate_cert.sh /
+COPY ./hosts.sh /
 COPY ./nginx.conf.tmpl /etc/nginx/
 
 WORKDIR /ssl
 ENTRYPOINT [ \
-"prehook", "sh /generate_cert.sh", "--", \
-"render", "/etc/nginx/nginx.conf", "--" \
+"render", "/etc/nginx/nginx.conf", "--", \
+"switch", "hosts=sh /hosts.sh", "--",  \
+"prehook", "sh /generate_cert.sh", "--" \
 ]
 
 CMD ["nginx", "-g", "daemon off;"]
