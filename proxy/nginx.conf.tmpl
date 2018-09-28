@@ -34,9 +34,9 @@ http {
 
     access_log  /var/log/nginx/access.log  main;
 
-    ssl_certificate /ssl/{{ var "DOMAIN" | default "example.com" }}.crt;
-    ssl_certificate_key /ssl/{{ var "DOMAIN" | default "example.com" }}.key;
-    ssl_dhparam /ssl/{{ var "DOMAIN" | default "example.com" }}_dhparam.pem;
+    ssl_certificate /ssl/{{ var "DOMAIN" | default "example.test" }}.crt;
+    ssl_certificate_key /ssl/{{ var "DOMAIN" | default "example.test" }}.key;
+    ssl_dhparam /ssl/{{ var "DOMAIN" | default "example.test" }}_dhparam.pem;
     ssl_session_timeout 1d;
     ssl_session_cache shared:SSL:50m;
     ssl_session_tickets off;
@@ -62,7 +62,7 @@ http {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
 
-        server_name {{ var "DOMAIN" | default "example.com" }};
+        server_name {{ var "DOMAIN" | default "example.test" }};
 
         location / {
             proxy_pass    http://nginx:80;
@@ -75,7 +75,7 @@ http {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
 
-        server_name pg.{{ var "DOMAIN" | default "example.com" }};
+        server_name pg.{{ var "DOMAIN" | default "example.test" }};
 
         location / {
             proxy_pass    http://pgweb:8081;
@@ -88,7 +88,7 @@ http {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
 
-        server_name mail.{{ var "DOMAIN" | default "example.com" }};
+        server_name mail.{{ var "DOMAIN" | default "example.test" }};
 
         location / {
             proxy_pass    http://mailhog:8025;
@@ -101,7 +101,7 @@ http {
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
 
-        server_name minio.{{ var "DOMAIN" | default "example.com" }};
+        server_name minio.{{ var "DOMAIN" | default "example.test" }};
 
         location / {
             proxy_pass    http://minio:9000;

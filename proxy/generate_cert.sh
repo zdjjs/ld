@@ -1,6 +1,6 @@
 #!/bin/sh
 
-: ${DOMAIN:=example.com}
+: ${DOMAIN:=example.test}
 : ${COUNTRY:=JP}
 : ${STATE:=Tokyo}
 : ${LOCALITY:=Chiyoda-ku}
