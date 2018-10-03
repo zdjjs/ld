@@ -1,4 +1,5 @@
 FROM nginx:alpine
+ENV TZ=Asia/Tokyo
 RUN apk update && apk add openssl
 
 RUN wget https://github.com/progrium/entrykit/releases/download/v0.4.0/entrykit_0.4.0_linux_x86_64.tgz \
