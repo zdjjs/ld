@@ -5,8 +5,6 @@ services:
     build: ./work
     volumes:
       - ${PROJECT_ROOT}:/var/www/html
-      - ./work/home:/root
-    tty: true
 
   php-fpm:
     build: ./php-fpm
