@@ -40,6 +40,8 @@ services:
   mailhog:
     build: ./mailhog
     restart: on-failure
+    volumes:
+      - ./mailhog/inbox:/mailhog/inbox
 
   minio:
     build: ./minio

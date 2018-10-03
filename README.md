@@ -74,7 +74,6 @@
 - メール(MailHog)
     - http://mail.(Dockerの.envのDOMAIN)
     - Laravelから送られたメールは実際には送信されず、全てMailHogが受信します
-    - シャットダウンすると消えます
 - DBビュワー
     - http://pg.(Dockerの.envのDOMAIN)
     - PostgreSQLのテーブルを閲覧出来ます
