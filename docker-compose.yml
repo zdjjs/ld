@@ -10,6 +10,7 @@ services:
     build: ./php-fpm
     volumes:
       - ${PROJECT_ROOT}:/var/www/html
+      - ./php-fpm/log:/var/log/php/
     links:
       - "proxy:minio.${DOMAIN}"
     restart: on-failure
