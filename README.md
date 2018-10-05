@@ -12,7 +12,7 @@
 5. `$ docker-compose build`
 6. Dockerの起動 `$ docker-compose up -d`
 7. `$ docker-compose run proxy hosts` で出力された情報をホスト機のhostsに追加
-8. Dockerのコンテナに入る `$ docker-compose exec work bash`
+8. Dockerのコンテナに入る `$ docker-compose run work bash`
 9. `$ ~/.composer/vendor/bin/laravel new`
 10. Laravelの.env編集
 	```dotenv
@@ -30,7 +30,7 @@
 
 ## 2回目以降
 1. `$ docker-compose up -d`
-2. `$ docker-compose exec work bash`
+2. `$ docker-compose run work bash`
 
 ## オブジェクトストレージを使う
 1. `$ composer require league/flysystem-aws-s3-v3 ~1.0`
