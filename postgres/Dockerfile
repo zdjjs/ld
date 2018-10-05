@@ -1,5 +1,5 @@
 FROM postgres:9-alpine
-ENV TZ=Asia/Tokyo
-ENV POSTGRES_USER postgres
-ENV POSTGRES_PASSWORD password
-ENV LANG ja_JP.utf8
+ENV TZ=Asia/Tokyo \
+POSTGRES_USER=postgres \
+POSTGRES_PASSWORD=password \
+LANG=ja_JP.utf8
