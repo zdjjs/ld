@@ -23,6 +23,14 @@ services:
       - "${REDIS_PORT}:6379"
     restart: on-failure
 
+  redis-commander:
+    build: ./redis-commander
+    restart: on-failure
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    depends_on:
+      - redis
+
   postgres:
     build: ./postgres
     volumes:
@@ -72,3 +80,4 @@ services:
       - mailhog
       - minio
       - nginx
+      - redis-commander
