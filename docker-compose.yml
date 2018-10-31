@@ -5,6 +5,8 @@ services:
     build: ./work
     volumes:
       - ${PROJECT_ROOT}:/var/www/html
+    networks:
+      - backend
 
   php-fpm:
     build: ./php-fpm
@@ -14,6 +16,8 @@ services:
     links:
       - "proxy:minio.${DOMAIN}"
     restart: on-failure
+    networks:
+      - backend
 
   redis:
     build: ./redis
@@ -22,6 +26,8 @@ services:
     ports:
       - "${REDIS_PORT}:6379"
     restart: on-failure
+    networks:
+      - backend
 
   redis-commander:
     build: ./redis-commander
@@ -30,6 +36,8 @@ services:
       - REDIS_HOSTS=local:redis:6379
     depends_on:
       - redis
+    networks:
+      - backend
 
   postgres:
     build: ./postgres
@@ -38,24 +46,32 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     restart: on-failure
+    networks:
+      - backend
 
   pgweb:
     build: ./pgweb
     depends_on:
       - postgres
     restart: on-failure
+    networks:
+      - backend
 
   mailhog:
     build: ./mailhog
     restart: on-failure
     volumes:
       - mail_data:/mailhog/inbox
+    networks:
+      - backend
 
   minio:
     build: ./minio
     volumes:
       - ./minio/data:/minio
     restart: on-failure
+    networks:
+      - backend
 
   nginx:
     build: ./nginx
@@ -63,6 +79,10 @@ services:
       - ${PROJECT_ROOT}:/var/www/html
       - ./nginx/log:/var/log/nginx/
     restart: on-failure
+    depends_on:
+      - php-fpm
+    networks:
+      - backend
 
   proxy:
     build: ./proxy
@@ -75,14 +95,15 @@ services:
     ports:
       - "${HTTP_PORT}:80"
       - "${HTTPS_PORT}:443"
-    depends_on:
-      - pgweb
-      - mailhog
-      - minio
-      - nginx
-      - redis-commander
+    networks:
+      - frontend
+      - backend
 
 volumes:
   postgres_data:
   redis_data:
   mail_data:
+
+networks:
+  frontend:
+  backend:
