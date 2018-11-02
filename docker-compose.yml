@@ -61,7 +61,7 @@ services:
     build: ./mailhog
     restart: on-failure
     volumes:
-      - mail_data:/mailhog/inbox
+      - ./mailhog/inbox:/mailhog/inbox
     networks:
       - backend
 
@@ -102,7 +102,6 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  mail_data:
 
 networks:
   frontend:
