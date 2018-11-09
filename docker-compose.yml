@@ -43,6 +43,7 @@ services:
     build: ./postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d/
     ports:
       - "${POSTGRES_PORT}:5432"
     restart: on-failure
